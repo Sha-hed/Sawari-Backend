@@ -32,15 +32,14 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
 
-## Usage
+## Technologies Used
 
-Provide instructions and examples for use. Include screenshots as needed.
-
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
+1. **Node.js:** Backend runtime environment for handling asynchronous operations.
+2. **Express:** Framework for building RESTful APIs.
+3. **MongoDB:** NoSQL database for storing product and order data.
+4. **Mongoose:** ODM library for schema-based data modeling.
+5. **TypeScript:** Type-safe JavaScript for better development experience.
+6. **Zod:** Schema declaration and validation library for validating API requests.
 
 ## Credits
 

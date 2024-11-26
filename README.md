@@ -107,7 +107,7 @@ Create a .env file in the root directory with the following values:
 
   2. Get Reveneu (GET) :
 
-  > /api/orders/reveneu
+  > /api/orders/revenue
 
 
 ## Contact

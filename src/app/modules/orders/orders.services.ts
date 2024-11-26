@@ -1,6 +1,6 @@
-import { ProductModel } from "../products/products.model";
-import { Order } from "./orders.interface";
-import { OrderModel } from "./orders.model";
+import { ProductModel } from '../products/products.model';
+import { Order } from './orders.interface';
+import { OrderModel } from './orders.model';
 
 const createOrder = async (order: Order) => {
   const id = order.product;
@@ -9,18 +9,18 @@ const createOrder = async (order: Order) => {
   const availableBike = bike?.quantity as number;
 
   if (value > availableBike) {
-       throw new Error("Insufficient stock of the product");
-  } else if (value === availableBike){
-    const updateProduct = await ProductModel.findOneAndUpdate(
+    throw new Error('Insufficient stock of the product');
+  } else if (value === availableBike) {
+    await ProductModel.findOneAndUpdate(
       { _id: id },
-      { $set: { quantity: 0, inStock: false } }
+      { $set: { quantity: 0, inStock: false } },
     );
     const result = await OrderModel.create(order);
     return result;
   } else {
-    const updateProduct = await ProductModel.findOneAndUpdate(
+    await ProductModel.findOneAndUpdate(
       { _id: id },
-      { $inc: { quantity: -value } }
+      { $inc: { quantity: -value } },
     );
     const result = await OrderModel.create(order);
     return result;
@@ -30,29 +30,29 @@ const calculateTotalRevenue = async () => {
   const result = await OrderModel.aggregate([
     {
       $addFields: {
-        product: { $toObjectId: "$product" }
+        product: { $toObjectId: '$product' },
       },
     },
     {
       $lookup: {
-        from: "products",
-        localField: "product",
-        foreignField: "_id",
-        as: "productDetails",
+        from: 'products',
+        localField: 'product',
+        foreignField: '_id',
+        as: 'productDetails',
       },
     },
     {
-      $unwind: "$productDetails",
+      $unwind: '$productDetails',
     },
     {
       $project: {
-        totalPrice: { $multiply: ["$quantity", "$productDetails.price"] },
+        totalPrice: { $multiply: ['$quantity', '$productDetails.price'] },
       },
     },
     {
       $group: {
         _id: null,
-        totalRevenue: { $sum: "$totalPrice" },
+        totalRevenue: { $sum: '$totalPrice' },
       },
     },
     {

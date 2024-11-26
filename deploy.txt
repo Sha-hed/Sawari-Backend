@@ -1,0 +1,4 @@
+1. Deploy
+-Vercel CLI 
+  --Install
+-Github

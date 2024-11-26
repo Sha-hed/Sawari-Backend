@@ -4,7 +4,9 @@
 
 Bike Store is a backend web application developed using Node.js, Express, MongoDB, and TypeScript. This project is designed to manage bike-related data through CRUD operations while maintaining a focus on data integrity and efficiency. The application utilizes Mongoose schemas for defining database models and Zod for robust data validation, ensuring secure and consistent data handling.
 
-In addition to CRUD operations, the application supports order processing, where ordering a product adjusts inventory levels and tracks revenue generation. This feature is implemented using two Mongoose models: one for Product and another for Order, demonstrating seamless database relationships and efficient query handling.
+In addition to CRUD operations, the application supports order processing, where ordering a product adjusts inventory levels and tracks revenue generation. This feature is implemented using two Mongoose models: one for Product and another for Order, demonstrating seamless database relationships and efficient query handling. 
+
+Live Site : https://bike-store-backend-sand.vercel.app
 
 
 

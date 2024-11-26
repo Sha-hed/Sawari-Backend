@@ -7,6 +7,9 @@ Bike Store is a backend web application developed using Node.js, Express, MongoD
 In addition to CRUD operations, the application supports order processing, where ordering a product adjusts inventory levels and tracks revenue generation. This feature is implemented using two Mongoose models: one for Product and another for Order, demonstrating seamless database relationships and efficient query handling.
 
 
+
+
+
 ## Features
 
 1. **CRUD Operations:** Create, Read, Update, and Delete functionality for managing products and orders.
@@ -19,18 +22,8 @@ In addition to CRUD operations, the application supports order processing, where
    - **Order Model:** Handles order placement and updates revenue and product inventory.
 
 
-## Table of Contents (Optional)
 
-If your README is long, add a table of contents to make it easy for users to find what they need.
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-
-## Installation
-
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
 
 ## Technologies Used
 
@@ -82,13 +75,38 @@ Create a .env file in the root directory with the following values:
 > npm run start:dev
 
 
-## Features
+## API Endpoints 
 
-If your project has a lot of features, list them here.
+**Base URL :  **
+>  https://bike-store-backend-sand.vercel.app
 
-## 
+**Product Routes :**
+  1. Create a Product (POST) :
 
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
+  > /api/products/add-product
+
+  2. Read All Products (GET) :
+
+  > /api/products
+
+  3. Update a product (PUT) :
+
+  > /api/products/:productID
+
+  4. Delete a product (DELETE) :
+
+  > /api/products/:productID
+
+**Order Routes : **
+
+  1. Place a order (POST)  :
+
+  > /api/orders/order
+
+  2. Get Reveneu (GET) :
+
+  > /api/orders/reveneu
+
 
 ## Contact
 

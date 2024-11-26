@@ -11,6 +11,7 @@ const getAllBikes = async (query: object) => {
 };
 const getBikeById = async (id: string) => {
   const result = await ProductModel.findOne({ _id: id });
+  console.log('Single Bikre Result ', result);
   return result;
 };
 const updateBikeById = async (id: string, updatedInfo: object) => {

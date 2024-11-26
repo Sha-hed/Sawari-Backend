@@ -3,7 +3,7 @@ import { ProductController } from './products.controller';
 
 const productRouter = express.Router();
 
-productRouter.post('/add-product', ProductController.handleCreateBike);
+productRouter.post('/', ProductController.handleCreateBike);
 productRouter.get('/', ProductController.handleGetAllBikes);
 productRouter.get('/:productId', ProductController.handleGetSingleBike);
 productRouter.put('/:productId', ProductController.handleUpdateBike);

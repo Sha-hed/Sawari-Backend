@@ -6,6 +6,9 @@ const createOrder = async (order: Order) => {
   const id = order.product;
   const value = order.quantity;
   const bike = await ProductModel.findOne({ _id: id });
+  if(!bike){
+    throw new Error("Invalid product id")
+  }
   const availableBike = bike?.quantity as number;
 
   if (value > availableBike) {

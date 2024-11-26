@@ -23,7 +23,6 @@ const handleCreateOrder = async (req: Request, res: Response) => {
 const handleCalculateRevenue = async (req: Request, res: Response) => {
   try {
     const result = await OrderService.calculateTotalRevenue();
-    console.log('Revenue Result ', result);
     res.status(200).json({
       message: 'Revenue calculated successfully',
       status: true,

@@ -5,11 +5,11 @@ const OrderZodValidationSchema = z.object({
     message:
       'The email address provided is not valid. Please provide a valid email.',
   }),
-  product: z.string(),
-  quantity: z.number().min(1, { message: 'Quantity must be at least 1.' }),
+  product: z.string().min(1, "Product id is required"),
+  quantity: z.number().positive({ message: 'Quantity must be at least 1.' }),
   totalPrice: z
     .number({ invalid_type_error: 'Total price must be a number.' })
-    .min(0, { message: 'Total price must be a non-negative value.' }),
+    .positive({ message: 'Total price must be a non-negative value.' }),
 });
 
 export default OrderZodValidationSchema;

@@ -8,7 +8,7 @@ const handleCreateBike = async (req: Request, res: Response) => {
     const ValidatedData = ZodValidationSchema.parse(bike);
     const result = await ProductServices.createBike(ValidatedData);
     res.status(200).json({
-      message: 'Order created successfully',
+      message: 'Bike created successfully',
       status: true,
       data: result,
     });
@@ -45,7 +45,7 @@ const handleGetSingleBike = async (req: Request, res: Response) => {
     const id = req.params.productId;
     const result = await ProductServices.getBikeById(id);
     res.status(200).json({
-      message: 'Bikes retrieved successfully',
+      message: 'Bike retrieved successfully',
       success: true,
       data: result,
     });

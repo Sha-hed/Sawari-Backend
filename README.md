@@ -85,7 +85,7 @@ Create a .env file in the root directory with the following values:
 **Product Routes :**
   1. Create a Product (POST) :
 
-  > /api/products/add-product
+  > /api/products
 
   2. Read All Products (GET) :
 
@@ -103,11 +103,11 @@ Create a .env file in the root directory with the following values:
 
   1. Place a order (POST)  :
 
-  > /api/orders/order
+  > /api/orders
 
   2. Get Reveneu (GET) :
 
-  > /api/orders/reveneu
+  > /api/orders/revenue
 
 
 ## Contact

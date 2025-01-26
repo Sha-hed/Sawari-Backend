@@ -1,9 +1,10 @@
-import { Request, Response } from 'express'; // Importing types for Express request and response objects
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { RequestHandler} from 'express'; // Importing types for Express request and response objects
 import { OrderService } from './orders.services'; 
 import OrderZodValidationSchema from './orders.validation.zod'; 
 
 // Controller to handle order creation
-const handleCreateOrder = async (req: Request, res: Response) => {
+const handleCreateOrder:RequestHandler = async (req, res) => {
   try {
     const order = req.body; // Extracting order data from the request body
 
@@ -30,7 +31,7 @@ const handleCreateOrder = async (req: Request, res: Response) => {
 };
 
 // Controller to calculate total revenue from orders
-const handleCalculateRevenue = async (req: Request, res: Response) => {
+const handleCalculateRevenue:RequestHandler = async (req, res) => {
   try {
     // Fetching total revenue from the service layer
     const result = await OrderService.calculateTotalRevenue();

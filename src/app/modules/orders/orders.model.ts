@@ -1,19 +1,21 @@
 import { model, Schema } from 'mongoose';
-import { Order } from './orders.interface'; 
+import { TOrder } from './orders.interface';
 
-// Defining the schema for the 'Order' collection in MongoDB
-const orderSchema = new Schema<Order>(
-  {
-    
+const orderSchema = new Schema<TOrder>(
+  { 
+    name: {
+      type: String, 
+      required: [true, 'Name is required for the order.'], 
+    },
     email: {
       type: String, 
       required: [true, 'Email is required for the order.'], 
     },
     product: {
-      type: String, 
+      type: Schema.Types.ObjectId,
       required: [true, 'Product is required for the order.'], 
+      ref: 'Bike'
     },
-
     quantity: {
       type: Number, 
       required: [true, 'Quantity is required for the order.'], 
@@ -24,12 +26,22 @@ const orderSchema = new Schema<Order>(
       required: [true, 'Total price is required for the order.'], 
       min: [0, 'Total price must be a positive number.'], 
     },
+    transaction: {
+      order_id: {
+        type: String, 
+        default: 'none' // ✅ Sets the default value to 'none'
+      },
+      bank_status: {
+        type: String, 
+        enum: ['none', 'Pending', 'Cancel', 'Paid'], // ✅ Added 'none' as an allowed value
+        default: 'none' // ✅ Sets the initial status as 'none'
+      }
+    }
   },
   {
-    // Automatically add `createdAt` and `updatedAt` timestamps to the schema
     timestamps: true,
-  },
+  }
 );
 
 // Creating a Mongoose model named 'OrderModel'
-export const OrderModel = model<Order>('Order', orderSchema);
+export const OrderModel = model<TOrder>('Order', orderSchema);

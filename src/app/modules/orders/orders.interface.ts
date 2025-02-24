@@ -1,7 +1,13 @@
-// Defining the Order type
-export type Order = {
-  email: string;       // Customer's email address 
-  product: string;     // Name or identifier of the product being ordered
-  quantity: number;    // Quantity of the product 
-  totalPrice: number;  // Total price of the order 
+import { Types } from 'mongoose';
+
+export type TOrder = {
+  name: string;
+  email: string;
+  product: Types.ObjectId; // or string if needed
+  quantity: number;
+  totalPrice: number;
+  transaction: {
+    order_id: string;
+    bank_status: 'Pending' | 'Cancel' | 'Paid' | 'none';
+  };
 };

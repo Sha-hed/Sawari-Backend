@@ -3,19 +3,22 @@ import cors from 'cors';
 import router from './app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFoundRoute from './app/middlewares/notFoundRoute';
+
 const app = express();
 
 // Middleware setup for parsing incoming JSON data and enabling CORS
 app.use(express.json());
-app.use(cors()); 
+app.use(
+  cors({ origin: ['https://shahed-sawari.netlify.app'], credentials: true }),
+);
 
 // Setting up routers for product and order routes
-app.use('/api',router)
+app.use('/api/v1', router);
 // Default route for the root path
-app.get('/', (req, res) => {
-  res.send('Bike Store Server!'); 
-});
 
+app.get('/', (req, res) => {
+  res.send('Bike Store Server!');
+});
 
 app.use(globalErrorHandler);
 app.use(notFoundRoute);

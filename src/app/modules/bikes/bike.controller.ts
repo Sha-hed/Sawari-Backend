@@ -1,35 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RequestHandler } from 'express';
-import { ProductServices } from './products.services';
-import ZodValidationSchema from './products.validation.zod';
+import catchAsync from '../../utils/catchAsync';
+import { BikeServices } from './bike.service';
 
-// Controller to handle the creation of a new bike
-const handleCreateBike: RequestHandler = async (req, res) => {
-  try {
-    const bike = req.body;
-    const ValidatedData = ZodValidationSchema.parse(bike); // Validating the bike data using Zod schema
-    const result = await ProductServices.createBike(ValidatedData); // Calling the service to create the bike
-    res.status(200).json({
-      message: 'Bike created successfully', // Success message
-      status: true,
-      data: result, // Returning the created bike data
-    });
-  } catch (error: any) {
-    // Sending error response in case of failure
-    res.status(500).json({
-      message: 'Something went wrong',
-      success: false,
-      error, // Error message
-      stack: error.stack, // Error stack for debugging
-    });
-  }
-};
+const handleCreateBike: RequestHandler = catchAsync(async (req, res) => {
+  const bike = req.body;
+  const result = await BikeServices.createBike(bike);
+  res.status(200).json({
+    message: 'Bike Added Successfully',
+    status: true,
+    data: result,
+  });
+});
 
 // Controller to handle retrieving all bikes with optional query filters
 const handleGetAllBikes: RequestHandler = async (req, res) => {
   try {
-    const query = req.query; // Extracting query parameters from the request
-    const result = await ProductServices.getAllBikes(query); // Fetching all bikes based on query filters
+    // Extracting query parameters from the request
+    console.log('Ki Obosta bro', req.query);
+    // console.log('Params', req.params);
+    const result = await BikeServices.getAllBikes(req.query); // Fetching all bikes based on query filters
     res.status(200).json({
       message: 'Bikes retrieved successfully',
       success: true,
@@ -46,11 +36,21 @@ const handleGetAllBikes: RequestHandler = async (req, res) => {
   }
 };
 
+const handleFeaturedBike = catchAsync(async (req, res) => {
+  const result = await BikeServices.getFeaturedBikes();
+  res.status(200).json({
+    message: 'Bikes retrieved successfully',
+    success: true,
+    data: result,
+  });
+});
+
 // Controller to handle retrieving a single bike by its ID
 const handleGetSingleBike: RequestHandler = async (req, res) => {
   try {
     const id = req.params.productId; // Extracting bike ID from the request parameters
-    const result = await ProductServices.getBikeById(id); // Fetching the bike by ID
+    console.log('Bike id pas', id);
+    const result = await BikeServices.getBikeById(id); // Fetching the bike by ID
     res.status(200).json({
       message: 'Bike retrieved successfully', // Success message
       success: true,
@@ -70,9 +70,10 @@ const handleGetSingleBike: RequestHandler = async (req, res) => {
 // Controller to handle updating a bike's details by its ID
 const handleUpdateBike: RequestHandler = async (req, res) => {
   try {
-    const id = req.params.productId; // Extracting bike ID
+    // const id = req.params.productId; // Extracting bike ID
     const updatedInfo = req.body; // Extracting the updated bike data
-    const result = await ProductServices.updateBikeById(id, updatedInfo); // Updating the bike in the database
+    const { id, ...bikeInfo} = updatedInfo
+    const result = await BikeServices.updateBikeById(id, bikeInfo); // Updating the bike in the database
     res.status(200).json({
       message: 'Bike updated successfully',
       success: true,
@@ -92,12 +93,12 @@ const handleUpdateBike: RequestHandler = async (req, res) => {
 // Controller to handle deleting a bike by its ID
 const handleDeleteBike: RequestHandler = async (req, res) => {
   try {
-    const id = req.params.productId; // Extracting bike ID
-    await ProductServices.deleteBike(id); // Deleting the bike from the database
+    const id = req.params.bikeId; // Extracting bike ID
+    const result =  await BikeServices.deleteBike(id); // Deleting the bike from the database
     res.status(200).json({
       message: 'Bike deleted successfully',
       status: true,
-      data: {}, // Returning an empty object as a response
+      data: result, // Returning an empty object as a response
     });
   } catch (error: any) {
     // Sending error response in case of failure
@@ -111,10 +112,11 @@ const handleDeleteBike: RequestHandler = async (req, res) => {
 };
 
 // Exporting all the product-related controllers as a single object
-export const ProductController = {
+export const BikeController = {
   handleCreateBike,
   handleGetAllBikes,
   handleGetSingleBike,
   handleUpdateBike,
   handleDeleteBike,
+  handleFeaturedBike
 };

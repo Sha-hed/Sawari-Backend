@@ -52,7 +52,7 @@ Make sure you have the following installed:
 
 1. Clone the repository
 
-> git clone https://github.com/Sha-Hed/bike-store.git
+> git clone https://github.com/Sha-hed/Sawari-Backend.git
 
 2. Navigate to the project directory:
 

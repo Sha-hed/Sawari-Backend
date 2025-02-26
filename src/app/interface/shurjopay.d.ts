@@ -86,6 +86,7 @@ declare module "shurjopay" {
     usd_rate: number; // USD to BDT conversion rate at payment time
     transaction_status: string; // Payment status (e.g., Pending, Completed)
     method: string; // Payment method (e.g., bank cards, mobile wallets)
+    customer_order_id : string;
     sp_message: string; // Response message code description
     sp_code: number; // Response code for transaction status
     bank_status: string;

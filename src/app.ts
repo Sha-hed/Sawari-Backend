@@ -9,7 +9,7 @@ const app = express();
 // Middleware setup for parsing incoming JSON data and enabling CORS
 app.use(express.json());
 app.use(
-  cors({ origin: ['https://shahed-sawari.netlify.app'], credentials: true }),
+  cors({ origin: ['https://shahed-sawari.netlify.app', 'http://localhost:5173'], credentials: true }),
 );
 
 // Setting up routers for product and order routes

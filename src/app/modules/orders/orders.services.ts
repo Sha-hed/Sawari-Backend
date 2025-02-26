@@ -52,6 +52,7 @@ const createOrder = async (payload: TOrder, client_ip: string) => {
   // Payment Integration
   const shurjopayPayload = {
     amount: payload.totalPrice,
+    return_url: 'https://shahed-sawari.netlify.app',
     order_id: result._id,
     currency: 'BDT',
     customer_name: payload.name,
@@ -75,6 +76,7 @@ const createOrder = async (payload: TOrder, client_ip: string) => {
   // };
 
   const payment = await orderUtils.makePaymentAsync(shurjopayPayload);
+  console.log('Payment Object Dekh  : ', payment);
 
   const orderUpdate = await OrderModel.findByIdAndUpdate(
     result._id, // Pass only the ID, not an object
@@ -101,6 +103,15 @@ const createOrder = async (payload: TOrder, client_ip: string) => {
 
 const verifyPayment = async (order_id: string) => {
   const verifiedPayment = await orderUtils.verifyPaymentAsync(order_id);
+  const Id = verifiedPayment[0].customer_order_id;
+
+  const updateOrderInfo = await OrderModel.findByIdAndUpdate(
+    Id,
+    { $set: { 'transaction.bank_status': verifiedPayment[0].bank_status } },
+    { new: true },
+  );
+  console.log('I need that id : ', verifiedPayment[0].customer_order_id);
+  console.log('UpdateStatus : ', updateOrderInfo);
   return verifiedPayment;
 };
 
@@ -111,7 +122,7 @@ const GetAllOrders = async () => {
 };
 
 const getYourOrder = async (query: any) => {
-  const filter = { email: query.email }
+  const filter = { email: query.email };
   const orders = await OrderModel.find(filter);
 
   if (!orders.length) {
@@ -119,24 +130,24 @@ const getYourOrder = async (query: any) => {
     return;
   }
 
-  const order_ids = orders.map((order) => order.transaction?.order_id);
-  const verifiedPayment = await orderUtils.verifyPaymentAsync(
-    order_ids[order_ids.length - 1],
-  );
-  const status =
-    verifiedPayment[0]?.bank_status === 'Success'
-      ? 'Success'
-      : verifiedPayment[0]?.bank_status === 'Failed'
-        ? 'Failed'
-        : 'Pending';
+  // const order_ids = orders.map((order) => order.transaction?.order_id);
+  // const verifiedPayment = await orderUtils.verifyPaymentAsync(
+  //   order_ids[order_ids.length - 1],
+  // );
+  // const status =
+  //   verifiedPayment[0]?.bank_status === 'Success'
+  //     ? 'Success'
+  //     : verifiedPayment[0]?.bank_status === 'Failed'
+  //       ? 'Failed'
+  //       : 'Pending';
 
-  await OrderModel.findByIdAndUpdate(
-    orders[order_ids.length - 1]._id,
-    { $set: { 'transaction.bank_status': status } },
-    { new: true },
-  );
-  const updatedData = await OrderModel.find(filter);
-  return updatedData;
+  // await OrderModel.findByIdAndUpdate(
+  //   orders[order_ids.length - 1]._id,
+  //   { $set: { 'transaction.bank_status': status } },
+  //   { new: true },
+  // );
+  // const updatedData = await OrderModel.find(filter);
+  return orders;
 };
 
 const updateStatusByAdmin = async (payload: { id: string; status: string }) => {
@@ -160,12 +171,11 @@ const updateStatusByAdmin = async (payload: { id: string; status: string }) => {
   }
 };
 
-
 // Exporting the OrderService with the available methods
 export const OrderService = {
   createOrder,
   GetAllOrders,
   verifyPayment,
   getYourOrder,
-  updateStatusByAdmin
+  updateStatusByAdmin,
 };
